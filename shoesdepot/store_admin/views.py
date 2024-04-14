@@ -3,7 +3,6 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, V
 from django.urls import reverse_lazy
 from ..store.models import Product
 from .forms import CreatProductForm
-from django.db.models import Q
 
 
 class ModeratorRequiredMixin(View):
