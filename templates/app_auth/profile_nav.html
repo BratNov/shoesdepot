@@ -1,0 +1,43 @@
+<div class="container">
+    <ul class="nav nav-tabs fs-5">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/orders/' %}active{% endif %}" href="{% url 'orders_list' %}">Orders</a>
+        </li>
+        {% if user.profile.is_moderator %}
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/store_admin/' %}active{% endif %}"
+                   href="{% url 'admin_products_list' %}">Products List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/store_admin/create' %}active{% endif %}"
+                   href="{% url 'product_create' %}">Create Product</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/user/' %}active{% endif %}"
+               href="{% url 'profile' %}">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/user/email_change' %}active{% endif %}"
+               href="{% url 'email_change' %}">Change Email</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/user/change_password' %}active{% endif %}"
+               href="{% url 'change_password' %}">Change Password</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link {% if request.path == '/user/delete' %}active{% endif %}"
+               href="{% url 'delete_profile' %}">Delete Profile</a>
+        </li>
+    </ul>
+</div>
+{% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section>
+        {% include 'app_auth/profile_nav.html' %}
+        <div class="container bg-white py-5 shadow rounded-2">
+            <div class="container bg-l">
+                <div class="row pb-5">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header d-flex">
+                                <div class="col fs-3 fw-bold align-content-center">Order Details (Order #{{ order.pk }})</div>
+                                <div class="col fs-4 text-end align-items-center"><b>Date Ordered:</b> {{ order.date_ordered|date:"d M Y" }}</div>
+                            </div>
+                            <div class="card-body pt-3 pb-0">
+                                {% if user.profile.is_moderator %}
+                                    <div class="d-flex justify-content-between">
+                                        <form method="post" action="{% url 'order_detail' order.pk %}">
+                                            <div class="input-group">
+                                                <label class="input-group-text" for="Status">Status</label>
+                                                {{ form.status }}
+                                                <button type="submit" class="btn btn-outline-success">Update Status
+                                                </button>
+                                            </div>
+                                            {% csrf_token %}
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <span class="fs-3"><b>Status:</b> {{ order.get_status_display }}</span>
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="text-start"><span class="mx-2">Product</span></th>
+                                    <th class="text-center">Size</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-end"><span class="mx-2">Price</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in order_items %}
+                                    <tr>
+                                        <td class="text-start align-middle"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="max-height: 50px;" class="mx-2">{{ item.product.name }}</td>
+                                        <td class="text-center align-middle">{{ item.size.name }}</td>
+                                        <td class="text-center align-middle">{{ item.quantity }}</td>
+                                        <td class="text-end align-middle"><span class="mx-2">{{ item.price }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Shipping Address</h3>
+                            </div>
+                            <div class="card-body">
+                                {% if order_address.first_name %}
+                                    <p><b>{{ order_address.first_name }} {{ order_address.last_name }}</b></p>
+                                {% endif %}
+                                <p>{{ order_address.address }}</p>
+                                <p>{{ order_address.city }}, {{ order_address.postcode }}</p>
+                                <p>{{ order_address.country }}</p>
+                                <p><b>Phone:</b> {{ order_address.phone_number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="my-lg-5 py-lg-5"></div>
+{% endblock %}

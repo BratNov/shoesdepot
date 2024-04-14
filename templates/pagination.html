@@ -1,0 +1,41 @@
+{% if paginator.num_pages > 1 %}
+    <nav class="pb-3">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}
+{% if request.GET.sort %}&sort={{ request.GET.sort }}
+{% elif request.GET.pk %}&pk={{ request.GET.pk }}
+{% elif request.GET.category %}&category={{ request.GET.category }}
+{% elif request.GET.search_query %}&search_query={{ request.GET.search_query }}{% endif %}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            {% endif %}
+            {% for page_num in paginator.page_range %}
+                <li class="page-item {% if page_num == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}
+{% if request.GET.sort %}&sort={{ request.GET.sort }}
+{% elif request.GET.pk %}&pk={{ request.GET.pk }}
+{% elif request.GET.category %}&category={{ request.GET.category }}
+{% elif request.GET.search_query %}&search_query={{ request.GET.search_query }}{% endif %}">{{ page_num }}</a>
+                </li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}
+{% if request.GET.sort %}&sort={{ request.GET.sort }}
+{% elif request.GET.pk %}&pk={{ request.GET.pk }}
+{% elif request.GET.category %}&category={{ request.GET.category }}
+{% elif request.GET.search_query %}&search_query={{ request.GET.search_query }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

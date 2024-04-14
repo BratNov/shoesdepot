@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section>
+        {% include 'app_auth/profile_nav.html' %}
+        <div class="container bg-white py-5 shadow rounded-2">
+
+                <div class="card mx-auto bg-light" style="width: 45rem;">
+                    <div class="card-body">
+                        <h3>Update Product</h3>
+                        <form action="{% url 'product_edit' product.pk %}" method="post" enctype="multipart/form-data">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success px-4">Update Product</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </section>
+    <div class="py-5"></div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Section-->
+    <section>
+        {% include 'app_auth/profile_nav.html' %}
+    <div class="container bg-white py-5 shadow rounded-2">
+            <div class="container px-3 bg-">
+                <div class="d-flex justify-content-between">
+                    <h2>Orders List</h2>
+                    <form id="sort-form" method="GET">
+                        <div class="input-group input-group-sm">
+                            <label for="sort" class="input-group-text">Sort by:</label>
+                            <select id="sort" name="sort" class="form-select">
+                                {% for option, label in sort_options %}
+                                    <option value="{{ option }}"{% if option == sort_by %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-success">Sort</button>
+                        </div>
+                    </form>
+                </div>
+                {% if orders %}
+                    <table class="table table-striped align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-start"><span class="mx-3">Order No</span></th>
+                            <th scope="col" class="text-center">Date</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-end mx-3"><span class="mx-3">Order Details</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td class="text-start"><span class="mx-3">{{ order.pk }}</span></td>
+                                <td class="text-center">{{ order.date_ordered|date:"d M Y" }}</td>
+                                <td class="text-center">{{ order.get_status_display }}</td>
+                                <td class="text-end"><a href="{% url 'order_detail' order.pk %}" class="mx-3 btn btn-sm btn-primary">Order Details</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% include 'pagination.html' with paginator=page_obj.paginator %}
+                {% else %}
+                    <div class="display-3 text-center my-xxl-5">No Orders</div>
+                {% endif %}
+            </div>
+    </div>
+    </section>
+    <div class="py-lg-5"></div>
+{% endblock %}

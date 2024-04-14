@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <div class="modal fade" id="popup-message" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="m-3"></p>
+                        <span class="h5">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</span>
+                        <p class="m-3"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#popup-message').modal('show');
+            });
+        </script>
+    {% endif %}
+    <section>
+        {% if not cart_items %}
+            <div class="display-1 text-center my-xxl-5"> Cart is Empty</div>
+        {% else %}
+            <div class="container bg-white rounded-4 shadow">
+                <div class="row py-3 ">
+                    <div class="col">
+                        <h3>Cart Summary</h3>
+                    </div>
+                    <div class="col text-end">
+                        <a href="{% url 'cart_checkout' %}" class="btn btn-success">Checkout</a>
+                    </div>
+                </div>
+                <hr>
+                <table class="table table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th class="text-lg-end" scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td><a href="{% url 'product_details' item.product.slug %}"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="max-height: 100px;"></a></td>
+                            <td class="text-decoration-none text-dark">{{ item.product.name }}</td>
+                            <td>
+                                {% if item.product.is_on_sale %}
+                                    <span style="color: red;">&euro;{{ item.product.sale_price|floatformat:2 }}</span>
+                                    <br>
+                                    <span class="text-decoration-line-through">&euro;{{ item.product.price|floatformat:2 }}</span>
+                                {% else %}
+                                    &euro;{{ item.product.price|floatformat:2 }}
+                                {% endif %}</td>
+                            <td>{{ item.size }}</td>
+                            <td>
+                                <form action="{% url 'cart_update' item.cart_key %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <label>
+                                        <input type="number" name="quantity" value="{{ item.quantity }}" class="form-control form-control-sm d-inline" style="width: 60px;" min="1" max="10" step="1">
+                                    </label>
+                                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                </form>
+                            </td>
+                            <td>{{ item.item_total|floatformat:2 }}</td>
+                            <td class="text-lg-end">
+                                <form action="{% url 'cart_delete' item.cart_key %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row my-3">
+                    <div class="col text-end fw-bold h4">Total: &euro;{{ total_price|floatformat:2 }}</div>
+                </div>
+                <div class="row my-3">
+                    <div class="col text-end pb-3">
+                        <a href="{% url 'cart_checkout' %}" class="btn btn-success">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="container display-6 text-center pt-2 pb-2 fw-semibold">
+            You might also like
+        </div>
+        {% include 'store/product_list.html' %}
+    </section>
+{% endblock %}

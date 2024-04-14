@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Section-->
+    <section>
+        {% include 'app_auth/profile_nav.html' %}
+        <div class="container bg-white py-5 shadow rounded-2">
+            <div class="container">
+                <div class="d-flex justify-content-between mb-3">
+                    <h2>Products List</h2>
+                    <form method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="pk" name="pk" placeholder="Product ID" aria-label="Product ID">
+                            <select aria-label="category" class="form-select" id="category" name="category">
+                                <option value="">Select Category</option>
+                                {% for category in categories %}
+                                    {% if category.parent %}
+                                        <option value="{{ category.id }}">{{ category }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="text" class="form-control" id="search_query" name="search_query" placeholder="Search" aria-label="search_query">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </form>
+                </div>
+                {% if object_list %}
+                    <table class="table table-striped align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="ps-3">Image</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th class="col text-lg-end" scope="col">Edit</th>
+                            <th class="col text-lg-end pe-3" scope="col">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in object_list %}
+                            <tr>
+                                <td class="ps-3">
+                                    <a href="{% url 'product_edit' product.pk %}">
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-height: 100px;">
+                                    </a>
+                                </td>
+                                <td class="text-decoration-none text-dark">
+                                    Product #{{ product.pk }} - {{ product.name }}<br>
+                                    {% for size in product.sizes.all %}
+                                        {{ size }}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% if product.is_on_sale %}
+                                        <span style="color: red;">&euro;{{ product.sale_price }}</span><br>
+                                        <span class="text-decoration-line-through">&euro;{{ product.price }}</span>
+                                    {% else %}
+                                        &euro;{{ product.price }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-lg-end">
+                                    <a href="{% url 'product_edit' product.pk %}" class="btn btn-success">Edit</a>
+                                </td>
+                                <td class="text-lg-end pe-3">
+                                    <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% include 'pagination.html' with paginator=page_obj.paginator %}
+                {% else %}
+                    <div class="display-4 mt-5 text-center">No Products Found</div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <div class="py-5"></div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+    <div class="m-1">
+        <div class="container-fluid p-5 " style="max-width: 60%;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4" style="height: 100%;">
+                        <div class="card-body">
+                            <h1>Login</h1>
+                            <p class="text-muted">Sign In to your account</p>
+                            <form method="post" action="{% url 'login_user' %}">
+                                <div class="form-floating mb-3">
+                                    {{ form.username|placeholder:'Email address' }}
+                                    <label for="username">Email address</label>
+                                </div>
+                                <div class="form-floating">
+                                    {{ form.password|placeholder:"Password" }}
+                                    <label for="password">Password</label>
+                                </div>
+                                <input type="hidden" name="next" value="{{ next }}">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary mt-3 px-4">Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-success text-white p-4" style="height: 100%;">
+                        <div class="text-center"><h2>Sign up</h2></div>
+                        <br>
+                        <p><i class="bi bi-check2"></i> Receive special offers and promotions.</p>
+                        <p><i class="bi bi-check2"></i> Speed your way through checkout.</p>
+                        <p><i class="bi bi-check2"></i> View your order history and your current addresses.</p>
+                        <p><i class="bi bi-check2"></i> Access your saved items.</p>
+                        <p><i class="bi bi-check2"></i> Instant access to your account.</p>
+                        <div class="text-center">
+                            <a class="btn btn-light mt-1" href="{% url 'register_user' %}">Register Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-lg-5 m-lg-5"></div>
+{% endblock %}

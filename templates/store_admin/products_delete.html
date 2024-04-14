@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section>
+        {% include 'app_auth/profile_nav.html' %}
+        <div class="container bg-white py-5 shadow rounded-2">
+            <div class="card mx-auto bg-light" style="width: 45rem;">
+                <div class="card-body">
+                    <h3>Delite Product (Product #{{ product.pk }})</h3>
+                    <table class="table table-striped align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-height: 100px;"></td>
+                            <td class="text-decoration-none text-dark">
+                                {{ product.name }}<br>
+                                {% for size in product.sizes.all %}
+                                    {{ size }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% if product.is_on_sale %}
+                                    <span style="color: red;">&euro;{{ product.sale_price }}</span><br>
+                                    <span class="text-decoration-line-through">&euro;{{ product.price }}</span>
+                                {% else %}
+                                    &euro;{{ product.price }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form action="{% url 'product_delete' product.pk %}" method="post" class="text-center">
+                        {% csrf_token %}
+                        <div class="fs-5">Are you sure you want to delete this product? This action cannot be undone.
+                        </div>
+                        <button type="submit" class="btn btn-danger mt-2 px-5">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="py-5"></div>
+{% endblock %}

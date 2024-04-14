@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if request.GET.search_query and not products %}
+        <div class="container bg-white my-xxl-5 py-xxl-5 rounded-3 shadow">
+            <div class="display-5 text-center my-xxl-5 py-xxl-5"> Sorry, we couldn't find any products matching your
+                search.
+            </div>
+        </div>
+        <div class="py-xxl-5 my-xxl-5"></div>
+    {% endif %}
+    {% include 'store/product_list.html' %}
+{% endblock %}

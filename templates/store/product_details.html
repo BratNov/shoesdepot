@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block head %}
+    <!-- jQuery CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#cart_add_btn').click(function () {
+                const productId = '{{ product.pk }}';
+                const quantity = $('#inputQuantity').val();
+                const size = $('#product_size').val();
+
+                $.ajax({
+                    url: '{% url "cart_add" %}',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        size: size
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                    },
+                    success: function (response) {
+                        $('#cart_qty').text(response.cart_items_count).show();
+                        $('#cart_success_toast').toast('show');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="container">{% include 'breadcrumb.html' %}</div>
+    <section>
+        <div class="container px-4 px-lg-5 mt-3 bg-white rounded-5 shadow">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-lg-6 card border-0 rounded-5">
+                    <img class="card-img-top mb-md-0" src="{{ product.image.url }}" alt="{{ product.name }}"/>
+                    {% if product.is_on_sale %}
+                        <div class="rounded-pill text-white fw-bolder h3 position-absolute pb-1" style="top: 0.5rem; right: 1rem; background-color: red;">
+                            &nbsp;&nbsp;&nbsp;-{{ product.get_discount_percent }}&percnt;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 pt-3 mt-3 ">
+                    <div class="small mb-1">SKU: {{ product.pk }}</div>
+                    <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
+                    <div class="fs-5 mb-1">
+                        {% if product.is_on_sale %}
+                            <span class="fs-2 fw-bold" style="color: red;">&euro;{{ product.sale_price }}</span>
+                            <span class="fs-3 text-decoration-line-through">&euro;{{ product.price }}</span>
+                        {% else %}
+                            <span class="h2 fw-bold">&euro;{{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="d-flex">
+                        <select class="form-select border border-success me-3" id="product_size" style="width: 15rem;">
+                            {% for size in product.sizes.all %}
+                                <option value="{{ size.name }}">{{ size.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="inputQuantity">
+                            <input id="inputQuantity" type="number" name="quantity" value="1"
+                                   class="form-control border border-success text-center me-3" style="width: 60px;"
+                                   min="1" max="10" step="1">
+                        </label>
+                        <button class="btn btn-success flex-shrink-0" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop" type="button" id="cart_add_btn">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="m-1 pb-3 mt-4">
+                        <span class="h4">Product information</span>
+                        <p class="mt-2" align="justify">{{ product.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="m-3"></p>
+                    <span class="h5">{{ product.name }} added to cart!</span>
+                    <p class="m-3"></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'cart_summary' %}" class="btn btn-success">Go to cart</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container display-6 text-center pt-4 pb-2 fw-semibold">You might also like</div>
+    {% include 'store/product_list.html' %}
+{% endblock %}
