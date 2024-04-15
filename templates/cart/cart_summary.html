@@ -96,9 +96,11 @@
                 </div>
             </div>
         {% endif %}
+    {% if products %}
         <div class="container display-6 text-center pt-2 pb-2 fw-semibold">
             You might also like
         </div>
+    {% endif %}
         {% include 'store/product_list.html' %}
     </section>
 {% endblock %}
