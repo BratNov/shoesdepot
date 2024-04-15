@@ -18,7 +18,12 @@ def cart_add_view(request):
 def cart_summary_view(request):
     cart = request.session.get('cart', {})
     context = _cart_summary(cart)
-    context['products'] = sample(list(Product.objects.all()), 8)
+
+    if Product.objects.count() >= 8:
+        context['products'] = sample(list(Product.objects.all()), 8)
+    else:
+        context['products'] = []
+
     return render(request, 'cart/cart_summary.html', context)
 
 
