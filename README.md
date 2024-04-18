@@ -38,27 +38,75 @@ For my exam at SoftUni for the Python Web Django Framework course, I created an 
 - **store_admin/delete/<int:pk>/**: Only accessible to moderators! Deleting a product.
 
 ## Online Store Project Screenshots
-1. ![Home Page](screenshots/1_home_page.png)
-2. ![Parent Category (All Products)](screenshots/2_parent_category.png)
-3. ![Child Category](screenshots/3_child_category.png)
-4. ![Product Details](screenshots/4_product_details.png)
-5. ![Adding Product to Cart](screenshots/5_add_to_cart.png)
-6. ![Cart Summary](screenshots/6_cart_summary.png)
-7. ![Cart Checkout](screenshots/7_cart_checkout.png)
-8. ![Error on Cart Checkout](screenshots/8_cart_checkout_error.png)
-9. ![Order Details (Customer)](screenshots/9_order_details_customer.png)
-10. ![Order List (Customer)](screenshots/10_order_list_customer.png)
-11. ![Registration](screenshots/11_registration.png)
-12. ![Login](screenshots/12_login.png)
-13. ![Merging Carts after Login](screenshots/13_merge_carts.png)
-14. ![Adding Cart after Login](screenshots/14_add_cart_after_login.png)
-15. ![User Profile](screenshots/15_user_profile.png)
-16. ![User Password Change](screenshots/16_password_change.png)
-17. ![User Deletion](screenshots/17_user_deletion.png)
-18. ![User Email Change](screenshots/18_email_change.png)
-19. ![Order List (Moderator)](screenshots/19_order_list_moderator.png)
-20. ![Order Details (Moderator)](screenshots/20_order_details_moderator.png)
-21. ![Product Creation (Moderator)](screenshots/21_product_creation.png)
-22. ![Product Deletion (Moderator)](screenshots/22_product_deletion.png)
-23. ![Product Editing (Moderator)](screenshots/23_product_editing.png)
-24. ![Product List (Moderator)](screenshots/24_product_list_moderator.png)
+1. **Home Page**
+![Home Page](screenshots/1_home_page.png)
+
+2. **Parent Category (All Products)**
+![Parent Category (All Products)](screenshots/2_parent_category.png)
+
+3. **Child Category**
+![Child Category](screenshots/3_child_category.png)
+
+4. **Product Details**
+![Product Details](screenshots/4_product_details.png)
+
+5. **Adding Product to Cart**
+![Adding Product to Cart](screenshots/5_add_to_cart.png)
+
+6. **Cart Summary**
+![Cart Summary](screenshots/6_cart_summary.png)
+
+7. **Cart Checkout**
+![Cart Checkout](screenshots/7_cart_checkout.png)
+
+8. **Error on Cart Checkout**
+![Error on Cart Checkout](screenshots/8_cart_checkout_error.png)
+
+9. **Order Details (Customer)**
+![Order Details (Customer)](screenshots/9_order_details_customer.png)
+
+10. **Order List (Customer)**
+![Order List (Customer)](screenshots/10_order_list_customer.png)
+
+11. **Registration**
+![Registration](screenshots/11_registration.png)
+
+12. **Login**
+![Login](screenshots/12_login.png)
+
+13. **Merging Carts after Login**
+![Merging Carts after Login](screenshots/13_merge_carts.png)
+
+14. **Adding Cart after Login**
+![Adding Cart after Login](screenshots/14_add_cart_after_login.png)
+
+15. **User Profile**
+![User Profile](screenshots/15_user_profile.png)
+
+16. **User Password Change**
+![User Password Change](screenshots/16_password_change.png)
+
+17. **User Deletion**
+![User Deletion](screenshots/17_user_deletion.png)
+
+18. **User Email Change**
+![User Email Change](screenshots/18_email_change.png)
+
+19. **Order List (Moderator)**
+![Order List (Moderator)](screenshots/19_order_list_moderator.png)
+
+20. **Order Details (Moderator)**
+![Order Details (Moderator)](screenshots/20_order_details_moderator.png)
+
+21. **Product Creation (Moderator)**
+![Product Creation (Moderator)](screenshots/21_product_creation.png)
+
+22. **Product Deletion (Moderator)**
+![Product Deletion (Moderator)](screenshots/22_product_deletion.png)
+
+23. **Product Editing (Moderator)**
+![Product Editing (Moderator)](screenshots/23_product_editing.png)
+
+24. **Product List (Moderator)**
+![Product List (Moderator)](screenshots/24_product_list_moderator.png)
+
