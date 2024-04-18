@@ -11,7 +11,7 @@ For my exam at SoftUni for the Python Web Django Framework course, I created an 
 ## Pages:
 
 - **Home**: Displays 8 randomly selected products. Also shows search results.
-- **product/<str:slug>/**: Displays information about the product with an option to add it to the cart, including selecting size and quantity. The quantity of added products updates next to the cart icon. A modal window appears upon adding the product to the cart to prevent multiple clicks on the "Add to Cart" button. Adding to the cart is done via a JSON request. The cart is stored in the session.
+- **product/<str:slug>/**: Displays information about the product with an option to add it to the cart, including selecting size and quantity. The quantity of added products updates next to the cart icon. A modal window appears upon adding the product to the cart to prevent multiple clicks on the "Add to Cart" button. Adding to the cart is done via a JSON request. The cart is stored in the session. Below the product information, a section titled "You might also like" displays 8 products from the same category. If there are not enough products from the same category, products from other categories are displayed to complement the list.
 - **category/<str:category_slug>/**: Displays products from the respective category with pagination. Users can choose to view all products in the main category, in which case all products in the child categories are displayed. Sorting options for products include:
   - Price low to high
   - Price high to low
