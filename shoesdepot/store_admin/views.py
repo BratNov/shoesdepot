@@ -46,7 +46,7 @@ class ProductListView(ModeratorRequiredMixin, ListView):
         if self.request.GET.get('category'):
             filters['category__pk'] = self.request.GET.get('category')
         if self.request.GET.get('search_query'):
-            filters['search_query'] = self.request.GET.get('search_query')
+            filters['name__icontains'] = self.request.GET.get('search_query')
 
         if filters:
             queryset = queryset.filter(**filters)
